@@ -17,8 +17,8 @@ namespace TerminalX
         {
             
 
-            string prefix = "brew";
-            string host = "XHost";
+            string prefix = "cola";
+            string host = "LocalHost";
             string ver = "0.0.1";
 
             
@@ -64,7 +64,7 @@ namespace TerminalX
             {
                 Environment.Exit(0);
                 break;
-            }
+            }https://github.com/frodggy/Term-X/blob/Terminal-v1.0.0/TerminalX.cs
             if (currentLine == prefix + " " + "ls") // Check string
             {
 
