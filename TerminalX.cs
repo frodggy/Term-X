@@ -19,7 +19,7 @@ namespace TerminalX
 
             string prefix = "cola";
             string host = "LocalHost";
-            string ver = "0.0.1";
+            string ver = "0.0.0";
 
             
              
