@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;  
 using System.Net;
 using System.IO;
+using System.Threading;
+using System.Diagnostics;
 	
 
 namespace TerminalX
@@ -15,23 +17,42 @@ namespace TerminalX
         
         static void Main(string[] args)
         {
+         
+
+            ConsoleSpiner spin = new ConsoleSpiner();
+            void OnStart()
+            {
+                DateTime start = DateTime.Now;
+                DateTime finish = start.AddSeconds(180);
+                Console.WriteLine("Setting up");
+                  while(DateTime.Now < finish)
+                {
+                spin.Turn();
+                }
+                Console.WriteLine("Done setting up");
+               
+
+
+            }
             
 
             string prefix = "cola";
-            string host = "LocalHost";
+            string host = "forkedOS";
             string ver = "0.0.0";
+            string programname = "Forkkit-CLI-v";
 
             
              
            
              Console.ForegroundColor = ConsoleColor.Green;
-             Console.Clear();
-            Console.Title = "⠀⠀⠀⠀⠀phoenix-terminal-v" + ver + "⠀⠀⠀⠀";
+             Console.BackgroundColor = ConsoleColor.Black;
+            Console.Clear();
+            Console.Title = "⠀⠀⠀" + programname + ver + "⠀⠀⠀⠀";
             Console.WriteLine("=========================================");
             Console.WriteLine("=========================================");
             Console.WriteLine("=========================================");
             Console.WriteLine("=========================================");
-            Console.WriteLine("=========phoenix-terminal-v" + ver + "=========");
+            Console.WriteLine("==========" + programname + ver + "=============");
             Console.WriteLine("=========================================");
             Console.WriteLine("=========================================");
             Console.WriteLine("=========================================");
@@ -48,12 +69,16 @@ namespace TerminalX
              if(password == "root")
              {
                  Console.WriteLine("Logged in" + "⠀Welcome⠀" + userName);
+                  OnStart();
 
              }
              else
              {
                  return;
              }
+             
+
+             
 
 
          while (true) // Loop indefinitely
@@ -64,7 +89,7 @@ namespace TerminalX
             {
                 Environment.Exit(0);
                 break;
-            }https://github.com/frodggy/Term-X/blob/Terminal-v1.0.0/TerminalX.cs
+            }
             if (currentLine == prefix + " " + "ls") // Check string
             {
 
@@ -101,11 +126,64 @@ namespace TerminalX
              {
               password = Console.ReadLine();   
              }
-                 
+              if (currentLine == prefix + " " + "clear")
+             {
+              Console.Clear();
+             }
+             if (currentLine == prefix + " " + "pwd")
+             {
+                Console.WriteLine(Directory.GetCurrentDirectory());
+             }
+             if (currentLine == prefix + " " + "cp")
+             {
+                 if (args.Length != 2)
+                {
+                    Console.WriteLine("The syntax of the command is incorrect.");
+                }
+                else
+                {
+                    if (File.Exists(args[0]) == false)
+                    {
+                        Console.WriteLine("Source file not found");
+                    }
+                    else if (Directory.Exists(args[1]) == false)
+                    {
+                        Console.WriteLine("Target Directory not found");
+                    }
+                    else
+                    {
+                        File.Copy(args[0], args[1] + "\\" + args[0]);
+                    }
+                }
+             }
+                        
+        }
         #endregion
-             
+    }
 
-   }
- }
+        public class ConsoleSpiner
+        {
+            int counter;
+            public ConsoleSpiner()
+            {
+                counter = 0;
+            }
+            public void Turn()
+            {
+                counter++;        
+                switch (counter % 4)
+                {
+                    case 0: Console.Write("/"); break;
+                    case 1: Console.Write("-"); break;
+                    case 2: Console.Write("\\"); break;
+                    case 3: Console.Write("|"); break;
+                }
+                Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+            }
+        }
+
+
+    }
 }
+
 }
